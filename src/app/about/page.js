@@ -29,8 +29,14 @@ export default function About() {
             <div className="space-y-8">
               <div>
                 <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">About Me</h3>
-                <p className="text-gray-600 dark:text-gray-300">
+                <p className="text-gray-600 dark:text-gray-300 mb-4">
                   I am a Back-end Developer skilled in PHP, JavaScript, Python, MySQL, and PostgreSQL. I have experience with frameworks like Laravel, CodeIgniter, Django and Next.js. I am good at designing and improving databases, working in Linux, and have knowledge of frontend, CI/CD, and deployment. I enjoy building software that is fast, reliable, and useful for users.
+                </p>
+                <p className="text-gray-600 dark:text-gray-300 mb-4">
+                  My journey in software development began during my university years, and I've since worked with various companies, delivering solutions that impact real users. I believe in writing clean, maintainable code and staying updated with the latest technologies and best practices.
+                </p>
+                <p className="text-gray-600 dark:text-gray-300">
+                  When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, or sharing knowledge with the developer community. I'm passionate about creating digital solutions that make a difference.
                 </p>
               </div>
 
@@ -121,6 +127,28 @@ export default function About() {
                   <h4 className="font-semibold text-gray-900 dark:text-white">B.Sc., Computer Science & Engineering</h4>
                   <p className="text-purple-600 dark:text-purple-400">United International University, Dhaka, BD</p>
                   <p className="text-sm text-gray-500 dark:text-gray-400">08/2016</p>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">My Values</h3>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                    <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Quality & Excellence</h4>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">I strive for excellence in every project, ensuring code quality, performance, and user satisfaction.</p>
+                  </div>
+                  <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                    <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Continuous Learning</h4>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">Technology evolves rapidly, and I commit to staying updated with the latest tools and best practices.</p>
+                  </div>
+                  <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                    <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Collaboration</h4>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">I believe great software is built through teamwork, clear communication, and shared vision.</p>
+                  </div>
+                  <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                    <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Problem Solving</h4>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">I enjoy tackling complex challenges and finding elegant solutions that create real value.</p>
+                  </div>
                 </div>
               </div>
 

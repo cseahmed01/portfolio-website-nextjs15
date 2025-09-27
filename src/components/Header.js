@@ -123,7 +123,7 @@ export default function Header() {
         </button>
         {isMenuOpen && (
           <div
-            className="fixed inset-0 bg-black bg-opacity-20 z-10 md:hidden backdrop-blur-sm"
+            className="fixed inset-0 bg-opacity-20 z-10 md:hidden backdrop-blur-sm"
             onClick={() => setIsMenuOpen(false)}
           ></div>
         )}

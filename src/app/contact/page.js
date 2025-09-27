@@ -11,10 +11,20 @@ export default function Contact() {
               <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-6">
                 Let's Connect
               </h2>
-              <p className="text-gray-600 dark:text-gray-300 mb-8">
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
                 I'm always interested in new opportunities and collaborations.
                 Whether you have a project in mind, want to discuss technology,
                 or just want to say hello, feel free to reach out!
+              </p>
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
+                Currently available for freelance work and full-time positions.
+                I specialize in back-end development with PHP and Python frameworks,
+                and have extensive experience in full-stack web development.
+              </p>
+              <p className="text-gray-600 dark:text-gray-300 mb-8">
+                Response time is typically within 24 hours. For urgent inquiries,
+                please call directly. I look forward to hearing from you and
+                exploring how we can work together!
               </p>
               <div className="space-y-4">
                 <div className="flex items-center">
