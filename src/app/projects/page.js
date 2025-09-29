@@ -1,15 +1,53 @@
 import { PrismaClient } from '@prisma/client'
+import Link from 'next/link'
 
 const prisma = new PrismaClient()
 
 async function getProjects() {
-  const projects = await prisma.project.findMany({
+  return await prisma.project.findMany({
+    include: {
+      technologies: true
+    },
     orderBy: { createdAt: 'desc' }
   })
-  return projects.map(project => ({
-    ...project,
-    technologies: project.technologies ? JSON.parse(project.technologies) : []
-  }))
+}
+
+export const metadata = {
+  title: "Projects Portfolio | Nasim Ahamed - Full Stack Developer",
+  description: "Explore my portfolio of web development projects including PHP Laravel applications, React Next.js websites, and full-stack solutions. View detailed case studies and technologies used.",
+  keywords: [
+    "web development projects",
+    "portfolio projects",
+    "PHP Laravel projects",
+    "React Next.js projects",
+    "full stack development",
+    "web applications",
+    "case studies",
+    "project portfolio",
+    "Nasim Ahamed projects"
+  ],
+  openGraph: {
+    title: "Projects Portfolio | Nasim Ahamed - Full Stack Developer",
+    description: "Explore my portfolio of web development projects including PHP Laravel applications, React Next.js websites, and full-stack solutions.",
+    url: 'https://nasimahamed.dev/projects',
+    siteName: 'Nasim Ahamed Portfolio',
+    images: [
+      {
+        url: '/images/projects-og.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Nasim Ahamed Projects Portfolio',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Projects Portfolio | Nasim Ahamed - Full Stack Developer",
+    description: "Explore my portfolio of web development projects including PHP Laravel applications, React Next.js websites.",
+    images: ['/images/projects-og.jpg'],
+  },
 }
 
 export default async function Projects() {
@@ -30,7 +68,7 @@ export default async function Projects() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project, index) => (
               <div
-                key={index}
+                key={project.id}
                 className="bg-surface dark:bg-surface-dark rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 animate-scale-in group"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
@@ -42,12 +80,12 @@ export default async function Projects() {
                     {project.description}
                   </p>
                   <div className="flex flex-wrap gap-2 mb-4">
-                    {project.technologies.map((tech, techIndex) => (
+                    {project.technologies.map((tech) => (
                       <span
-                        key={techIndex}
+                        key={tech.id}
                         className="bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary px-3 py-1 rounded-full text-body-small font-medium"
                       >
-                        {tech}
+                        {tech.name}
                       </span>
                     ))}
                   </div>

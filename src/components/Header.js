@@ -18,8 +18,8 @@ export default function Header() {
 
   return (
     <header className="bg-surface dark:bg-surface-dark shadow-sm border-b border-border sticky top-0 z-50 backdrop-blur-sm bg-opacity-95">
-      <nav className="container-fluid py-4 flex items-center justify-between">
-        <Link href="/" className="flex items-center group">
+      <nav className="container-fluid py-2 flex items-center justify-between">
+        <Link href="/" className="flex items-center group relative z-60">
           <Logo />
           <span className="ml-3 text-heading-3 font-bold text-text-primary dark:text-foreground">NASIM AHAMED</span>
         </Link>
@@ -78,18 +78,31 @@ export default function Header() {
 
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="p-2 rounded-lg bg-surface dark:bg-surface-dark hover:bg-border dark:hover:bg-border transition-colors focus-ring"
+            className="p-3 rounded-xl bg-primary hover:bg-primary-dark text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 focus-ring"
             aria-label="Toggle menu"
           >
-            <span className={`block w-5 h-0.5 bg-current mb-1 transition-transform duration-300 ${isMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`}></span>
-            <span className={`block w-5 h-0.5 bg-current mb-1 transition-opacity duration-300 ${isMenuOpen ? 'opacity-0' : ''}`}></span>
-            <span className={`block w-5 h-0.5 bg-current transition-transform duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}></span>
+            <div className="w-5 h-5 relative">
+              <span className={`absolute block w-5 h-0.5 bg-current transition-all duration-300 ${isMenuOpen ? 'rotate-45 top-2' : 'top-1'}`}></span>
+              <span className={`absolute block w-5 h-0.5 bg-current transition-opacity duration-300 ${isMenuOpen ? 'opacity-0' : 'top-2'}`}></span>
+              <span className={`absolute block w-5 h-0.5 bg-current transition-all duration-300 ${isMenuOpen ? '-rotate-45 top-2' : 'top-3'}`}></span>
+            </div>
           </button>
         </div>
 
         {/* Mobile Navigation */}
-        <div className={`md:hidden absolute top-full left-0 w-full bg-surface dark:bg-surface-dark border-b border-border shadow-lg transition-all duration-300 ${isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
-          <ul className="flex flex-col p-4 space-y-2">
+        <div className={`md:hidden fixed top-12 left-0 w-full bg-surface dark:bg-surface-dark border-b border-border shadow-lg transition-all duration-300 z-40 ${isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
+          <div className="flex justify-end p-4">
+            <button
+              onClick={() => setIsMenuOpen(false)}
+              className="p-2 rounded-lg bg-surface dark:bg-surface-dark hover:bg-border dark:hover:bg-border transition-colors"
+              aria-label="Close menu"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+          <ul className="flex flex-col px-4 pb-4 space-y-2">
             {navItems.map(({ href, label, color }) => (
               <li key={href} className="relative group">
                 <Link
@@ -108,7 +121,7 @@ export default function Header() {
         {/* Mobile Overlay */}
         {isMenuOpen && (
           <div
-            className="fixed inset-0 bg-black bg-opacity-20 z-10 md:hidden backdrop-blur-sm"
+            className="fixed inset-0 bg-black bg-opacity-20 z-30 md:hidden backdrop-blur-sm"
             onClick={() => setIsMenuOpen(false)}
           ></div>
         )}

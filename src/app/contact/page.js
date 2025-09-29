@@ -1,13 +1,88 @@
-import { PrismaClient } from '@prisma/client'
+'use client'
+import { useState, useEffect } from 'react'
 
-const prisma = new PrismaClient()
+export default function Contact() {
+  const [contact, setContact] = useState(null)
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState(null)
 
-async function getContact() {
-  return await prisma.contact.findFirst() || { email: 'cseahmed01@gmail.com', phone: '+88 01795825188', address: 'Dhaka, Bangladesh' }
-}
+  // Fetch contact data on component mount
+  useEffect(() => {
+    fetchContactData()
+  }, [])
 
-export default async function Contact() {
-  const contact = await getContact()
+  const fetchContactData = async () => {
+    try {
+      const response = await fetch('/api/contact-info')
+      const data = await response.json()
+      setContact(data)
+    } catch (error) {
+      console.error('Error fetching contact data:', error)
+      // Fallback data
+      setContact({
+        email: 'contact@example.com',
+        phone: '+1 (555) 123-4567',
+        address: 'Your Location'
+      })
+    }
+  }
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    setSubmitStatus(null)
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        setSubmitStatus({ type: 'success', message: data.message })
+        setFormData({ name: '', email: '', message: '' })
+      } else {
+        setSubmitStatus({ type: 'error', message: data.error })
+      }
+    } catch (error) {
+      setSubmitStatus({
+        type: 'error',
+        message: 'Something went wrong. Please try again later.'
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  if (!contact) {
+    return (
+      <main className="min-h-screen bg-gradient-to-br from-accent/5 to-secondary/5 dark:from-surface-dark dark:to-surface-dark">
+        <div className="container-fluid py-16">
+          <div className="max-w-6xl mx-auto text-center">
+            <div className="animate-pulse">Loading...</div>
+          </div>
+        </div>
+      </main>
+    )
+  }
   return (
     <main className="min-h-screen bg-gradient-to-br from-accent/5 to-secondary/5 dark:from-surface-dark dark:to-surface-dark">
       <div className="container-fluid py-16">
@@ -95,45 +170,78 @@ export default async function Contact() {
               </div>
             </div>
             <div className="bg-surface dark:bg-surface-dark rounded-xl shadow-xl p-8 animate-slide-in-right">
-              <form className="space-y-6">
+              {submitStatus && (
+                <div className={`mb-6 p-4 rounded-lg ${
+                  submitStatus.type === 'success'
+                    ? 'bg-success/10 text-success border border-success/20'
+                    : 'bg-error/10 text-error border border-error/20'
+                }`}>
+                  {submitStatus.message}
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label htmlFor="name" className="block text-body-small font-medium text-text-primary dark:text-foreground mb-3">
-                    Name
+                    Name *
                   </label>
                   <input
                     type="text"
                     id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    required
                     className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary bg-surface dark:bg-surface-dark text-text-primary dark:text-foreground transition-all focus-ring"
                     placeholder="Your Name"
                   />
                 </div>
                 <div>
                   <label htmlFor="email" className="block text-body-small font-medium text-text-primary dark:text-foreground mb-3">
-                    Email
+                    Email *
                   </label>
                   <input
                     type="email"
                     id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required
                     className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary bg-surface dark:bg-surface-dark text-text-primary dark:text-foreground transition-all focus-ring"
-                    placeholder="cseamed01@gmail.com"
+                    placeholder="your.email@example.com"
                   />
                 </div>
                 <div>
                   <label htmlFor="message" className="block text-body-small font-medium text-text-primary dark:text-foreground mb-3">
-                    Message
+                    Message *
                   </label>
                   <textarea
                     id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
                     rows={5}
+                    required
                     className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary bg-surface dark:bg-surface-dark text-text-primary dark:text-foreground transition-all focus-ring resize-none"
-                    placeholder="Your message here..."
+                    placeholder="Tell me about your project or inquiry..."
                   ></textarea>
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-primary hover:bg-primary-dark text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg focus-ring"
+                  disabled={isSubmitting}
+                  className="w-full bg-primary hover:bg-primary-dark disabled:bg-primary/50 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg focus-ring flex items-center justify-center"
                 >
-                  Send Message
+                  {isSubmitting ? (
+                    <>
+                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Sending...
+                    </>
+                  ) : (
+                    'Send Message'
+                  )}
                 </button>
               </form>
             </div>

@@ -7,6 +7,49 @@ async function getAbout() {
   return await prisma.about.findFirst() || { content: 'About content not available.' }
 }
 
+export const metadata = {
+  title: "About Me | Nasim Ahamed - Full Stack Developer Background",
+  description: "Learn about Nasim Ahamed's journey as a full-stack developer. 3+ years experience in PHP, Laravel, React, Next.js. B.Sc. in Computer Science & Engineering from United International University.",
+  keywords: [
+    "about Nasim Ahamed",
+    "full stack developer background",
+    "software engineer experience",
+    "PHP Laravel developer",
+    "React Next.js developer",
+    "Bangladesh developer",
+    "computer science engineering",
+    "web development experience",
+    "programming background"
+  ],
+  openGraph: {
+    title: "About Me | Nasim Ahamed - Full Stack Developer Background",
+    description: "Learn about Nasim Ahamed's journey as a full-stack developer with 3+ years experience in modern web technologies.",
+    url: 'https://nasimahamed.dev/about',
+    siteName: 'Nasim Ahamed Portfolio',
+    images: [
+      {
+        url: '/images/nasim.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Nasim Ahamed - About Me',
+      },
+    ],
+    locale: 'en_US',
+    type: 'profile',
+    profile: {
+      firstName: 'Nasim',
+      lastName: 'Ahamed',
+      username: 'nasimahamed',
+    },
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "About Me | Nasim Ahamed - Full Stack Developer",
+    description: "Learn about Nasim Ahamed's journey as a full-stack developer with 3+ years experience.",
+    images: ['/images/nasim.jpg'],
+  },
+}
+
 export default async function About() {
   const about = await getAbout()
   return (

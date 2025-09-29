@@ -2,30 +2,54 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
-  --primary: #6366f1;
-  --primary-dark: #4f46e5;
-  --secondary: #f59e0b;
-  --accent: #10b981;
+  --foreground: #0f172a;
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --primary-light: #3b82f6;
+  --secondary: #64748b;
+  --secondary-dark: #475569;
+  --accent: #f59e0b;
+  --accent-dark: #d97706;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
   --surface: #f8fafc;
-  --surface-dark: #1e293b;
-  --text-primary: #1e293b;
-  --text-secondary: #64748b;
+  --surface-dark: #0f172a;
+  --surface-secondary: #f1f5f9;
+  --surface-secondary-dark: #1e293b;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
   --border: #e2e8f0;
+  --border-dark: #334155;
+  --shadow: rgba(0, 0, 0, 0.1);
+  --shadow-dark: rgba(0, 0, 0, 0.3);
 }
 
 .dark {
   --background: #0f172a;
-  --foreground: #f1f5f9;
-  --primary: #818cf8;
-  --primary-dark: #6366f1;
-  --secondary: #fbbf24;
-  --accent: #34d399;
+  --foreground: #f8fafc;
+  --primary: #60a5fa;
+  --primary-dark: #3b82f6;
+  --primary-light: #93c5fd;
+  --secondary: #94a3b8;
+  --secondary-dark: #64748b;
+  --accent: #fbbf24;
+  --accent-dark: #f59e0b;
+  --success: #34d399;
+  --warning: #fbbf24;
+  --error: #f87171;
   --surface: #1e293b;
   --surface-dark: #0f172a;
-  --text-primary: #f1f5f9;
-  --text-secondary: #94a3b8;
+  --surface-secondary: #334155;
+  --surface-secondary-dark: #1e293b;
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
   --border: #334155;
+  --border-dark: #1e293b;
+  --shadow: rgba(0, 0, 0, 0.3);
+  --shadow-dark: rgba(0, 0, 0, 0.5);
 }
 
 @theme {
@@ -57,44 +81,80 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Enhanced Typography Scale */
+/* Professional Typography Scale */
 .text-display {
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  line-height: 1.1;
-  font-weight: 700;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  line-height: 1.05;
+  font-weight: 800;
+  letter-spacing: -0.025em;
 }
 
 .text-heading-1 {
-  font-size: clamp(2rem, 4vw, 3rem);
-  line-height: 1.2;
-  font-weight: 600;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .text-heading-2 {
-  font-size: clamp(1.5rem, 3vw, 2.25rem);
-  line-height: 1.3;
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  line-height: 1.2;
   font-weight: 600;
+  letter-spacing: -0.015em;
 }
 
 .text-heading-3 {
-  font-size: clamp(1.25rem, 2.5vw, 1.875rem);
-  line-height: 1.4;
-  font-weight: 500;
+  font-size: clamp(1.25rem, 2.5vw, 2rem);
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 .text-body-large {
-  font-size: clamp(1.125rem, 2vw, 1.25rem);
-  line-height: 1.6;
+  font-size: clamp(1.125rem, 2vw, 1.375rem);
+  line-height: 1.7;
+  font-weight: 400;
 }
 
 .text-body {
   font-size: clamp(1rem, 1.5vw, 1.125rem);
-  line-height: 1.6;
+  line-height: 1.7;
+  font-weight: 400;
 }
 
 .text-body-small {
   font-size: clamp(0.875rem, 1.25vw, 1rem);
-  line-height: 1.5;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+/* Professional Design Elements */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glass-effect-dark {
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(51, 65, 85, 0.3);
+}
+
+.gradient-primary {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+}
+
+.gradient-accent {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+}
+
+.shadow-professional {
+  box-shadow: 0 10px 25px -5px var(--shadow), 0 10px 10px -5px var(--shadow);
+}
+
+.shadow-professional-dark {
+  box-shadow: 0 10px 25px -5px var(--shadow-dark), 0 10px 10px -5px var(--shadow-dark);
 }
 
 /* Custom animations */
@@ -144,10 +204,19 @@ body {
 
 @keyframes float {
   0%, 100% {
-    transform: translateY(0px);
+    transform: translateY(0px) rotate(0deg);
   }
   50% {
-    transform: translateY(-10px);
+    transform: translateY(-10px) rotate(2deg);
+  }
+}
+
+@keyframes gentleRotate {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(1deg);
   }
 }
 
@@ -169,6 +238,10 @@ body {
 
 .animate-float {
   animation: float 3s ease-in-out infinite;
+}
+
+.animate-gentle-rotate {
+  animation: gentleRotate 6s ease-in-out infinite;
 }
 
 /* Responsive utilities */

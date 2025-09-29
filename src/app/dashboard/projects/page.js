@@ -1,10 +1,14 @@
 import { PrismaClient } from '@prisma/client'
 import { revalidatePath } from 'next/cache'
+import EditProjectForm from './EditProjectForm'
 
 const prisma = new PrismaClient()
 
 async function getProjects() {
   return await prisma.project.findMany({
+    include: {
+      technologies: true
+    },
     orderBy: { createdAt: 'desc' }
   })
 }
@@ -16,6 +20,29 @@ async function addProject(formData) {
   const description = formData.get('description')
   const image = formData.get('image')
   const link = formData.get('link')
+  const technologiesInput = formData.get('technologies')
+
+  // Parse technologies from comma-separated string
+  const technologyNames = technologiesInput
+    ? technologiesInput.split(',').map(name => name.trim()).filter(name => name)
+    : []
+
+  // Create or connect technologies
+  const technologyData = await Promise.all(
+    technologyNames.map(async (name) => {
+      const existingTech = await prisma.technology.findUnique({
+        where: { name }
+      })
+      if (existingTech) {
+        return { id: existingTech.id }
+      } else {
+        const newTech = await prisma.technology.create({
+          data: { name }
+        })
+        return { id: newTech.id }
+      }
+    })
+  )
 
   await prisma.project.create({
     data: {
@@ -23,6 +50,58 @@ async function addProject(formData) {
       description,
       image: image || null,
       link: link || null,
+      technologies: {
+        connect: technologyData
+      }
+    },
+  })
+
+  revalidatePath('/dashboard/projects')
+}
+
+async function updateProject(formData) {
+  'use server'
+
+  const id = parseInt(formData.get('id'))
+  const title = formData.get('title')
+  const description = formData.get('description')
+  const image = formData.get('image')
+  const link = formData.get('link')
+  const technologiesInput = formData.get('technologies')
+
+  // Parse technologies from comma-separated string
+  const technologyNames = technologiesInput
+    ? technologiesInput.split(',').map(name => name.trim()).filter(name => name)
+    : []
+
+  // Create or connect technologies
+  const technologyData = await Promise.all(
+    technologyNames.map(async (name) => {
+      const existingTech = await prisma.technology.findUnique({
+        where: { name }
+      })
+      if (existingTech) {
+        return { id: existingTech.id }
+      } else {
+        const newTech = await prisma.technology.create({
+          data: { name }
+        })
+        return { id: newTech.id }
+      }
+    })
+  )
+
+  await prisma.project.update({
+    where: { id },
+    data: {
+      title,
+      description,
+      image: image || null,
+      link: link || null,
+      technologies: {
+        set: [], // Clear existing connections
+        connect: technologyData
+      }
     },
   })
 
@@ -100,6 +179,19 @@ export default async function ProjectsPage() {
               className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
             />
           </div>
+          <div>
+            <label htmlFor="technologies" className="block text-sm font-medium text-gray-700">
+              Technologies
+            </label>
+            <input
+              type="text"
+              name="technologies"
+              id="technologies"
+              placeholder="React, Node.js, MongoDB"
+              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+            />
+            <p className="mt-1 text-sm text-gray-500">Enter technologies separated by commas</p>
+          </div>
           <button
             type="submit"
             className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium"
@@ -115,24 +207,15 @@ export default async function ProjectsPage() {
           <h3 className="text-lg font-medium text-gray-900">Existing Projects</h3>
         </div>
         <div className="divide-y divide-gray-200">
-          {projects.map((project) => (
-            <div key={project.id} className="px-6 py-4 flex justify-between items-center">
-              <div>
-                <h4 className="text-sm font-medium text-gray-900">{project.title}</h4>
-                <p className="text-sm text-gray-500">{project.description}</p>
-              </div>
-              <form action={deleteProject} className="inline">
-                <input type="hidden" name="id" value={project.id} />
-                <button
-                  type="submit"
-                  className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs"
-                >
-                  Delete
-                </button>
-              </form>
-            </div>
-          ))}
-        </div>
+           {projects.map((project) => (
+             <EditProjectForm
+               key={project.id}
+               project={project}
+               onUpdate={updateProject}
+               onDelete={deleteProject}
+             />
+           ))}
+         </div>
       </div>
     </div>
   )

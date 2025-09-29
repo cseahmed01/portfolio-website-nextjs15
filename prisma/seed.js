@@ -48,21 +48,107 @@ async function main() {
 
   console.log('Contact created:', contact)
 
+  // Seed Technologies first (for projects)
+  const techData = [
+    'PHP', 'jQuery', 'Bootstrap', 'Bootstrap3', 'Bootstrap 5', 'CodeIgniter3', 'JavaScript',
+    'Laravel 11', 'Laravel11', 'Next.js', 'NextJs15', 'Tailwind CSS', 'Prisma', 'React', 'Node.js', 'MongoDB'
+  ]
+
+  for (const techName of techData) {
+    await prisma.technology.upsert({
+      where: { name: techName },
+      update: {},
+      create: { name: techName },
+    })
+  }
+
   // Seed Projects
   const projects = [
     {
-      title: 'Portfolio Website',
-      description: 'A modern portfolio website built with Next.js and Tailwind CSS, featuring responsive design and smooth animations.',
+      title: 'Client Complaint Management System',
+      description: 'A comprehensive system for managing client complaints with user-friendly interface, complaint tracking, and resolution management.',
       image: '/images/project1.jpg',
-      link: 'https://example.com',
-      technologies: JSON.stringify(['Next.js', 'Tailwind CSS', 'Prisma']),
+      link: '/projects',
+      technologies: {
+        connect: [
+          { name: 'PHP' },
+          { name: 'jQuery' },
+          { name: 'Bootstrap' }
+        ]
+      }
     },
     {
-      title: 'E-commerce Platform',
-      description: 'Full-stack e-commerce solution with React frontend, Node.js backend, and MongoDB database.',
+      title: 'Vehicle Management System (CTM)',
+      description: 'Complete vehicle tracking and management system for fleet operations, maintenance scheduling, and vehicle utilization analytics.',
       image: '/images/project2.jpg',
-      link: 'https://example.com',
-      technologies: JSON.stringify(['React', 'Node.js', 'MongoDB']),
+      link: '/projects',
+      technologies: {
+        connect: [
+          { name: 'CodeIgniter3' },
+          { name: 'Bootstrap3' }
+        ]
+      }
+    },
+    {
+      title: 'Meeting Room Management System',
+      description: 'Efficient meeting room booking and management system with calendar integration, availability checking, and automated notifications.',
+      image: '/images/project3.jpg',
+      link: '/projects',
+      technologies: {
+        connect: [
+          { name: 'PHP' },
+          { name: 'jQuery' },
+          { name: 'Bootstrap3' }
+        ]
+      }
+    },
+    {
+      title: 'Online News Portal',
+      description: 'Dynamic news portal with content management, user engagement features, and responsive design for optimal user experience.',
+      image: '/images/project4.jpg',
+      link: '/projects',
+      technologies: {
+        connect: [
+          { name: 'CodeIgniter3' },
+          { name: 'JavaScript' },
+          { name: 'Bootstrap3' }
+        ]
+      }
+    },
+    {
+      title: 'University Management System (UMS)',
+      description: 'Comprehensive university management solution handling student records, courses, and administrative tasks with modern UI.',
+      image: '/images/project5.jpg',
+      link: '/projects',
+      technologies: {
+        connect: [
+          { name: 'Laravel 11' },
+          { name: 'Bootstrap 5' }
+        ]
+      }
+    },
+    {
+      title: 'Payroll Management System',
+      description: 'Complete payroll processing system with employee management, salary calculations, tax computations, and reporting features.',
+      image: '/images/project6.jpg',
+      link: '/projects',
+      technologies: {
+        connect: [
+          { name: 'Laravel11' }
+        ]
+      }
+    },
+    {
+      title: 'Online News Portal CMS & Portal',
+      description: 'Full-featured content management system and news portal with modern frontend architecture and robust backend implementation.',
+      image: '/images/project7.jpg',
+      link: '/projects',
+      technologies: {
+        connect: [
+          { name: 'Laravel 11' },
+          { name: 'NextJs15' }
+        ]
+      }
     },
   ]
 
@@ -73,6 +159,34 @@ async function main() {
   }
 
   console.log('Projects created')
+
+  // Seed Skills
+  const skills = [
+    { name: 'PHP', category: 'Backend' },
+    { name: 'JavaScript', category: 'Frontend' },
+    { name: 'Python', category: 'Backend' },
+    { name: 'HTML', category: 'Frontend' },
+    { name: 'CSS', category: 'Frontend' },
+    { name: 'Bootstrap', category: 'Frontend' },
+    { name: 'Laravel', category: 'Backend' },
+    { name: 'CodeIgniter', category: 'Backend' },
+    { name: 'Django', category: 'Backend' },
+    { name: 'React', category: 'Frontend' },
+    { name: 'Next.js', category: 'Frontend' },
+    { name: 'MySQL', category: 'Database' },
+    { name: 'PostgreSQL', category: 'Database' },
+    { name: 'MongoDB', category: 'Database' },
+  ]
+
+  for (const skill of skills) {
+    await prisma.skill.upsert({
+      where: { name: skill.name },
+      update: {},
+      create: skill,
+    })
+  }
+
+  console.log('Skills created')
 }
 
 main()
