@@ -114,6 +114,9 @@ export const metadata = {
   other: {
     'google-site-verification': 'your-google-verification-code',
   },
+  icons: {
+    icon: '/logo.svg',
+  },
 };
 
 export default function RootLayout({ children }) {
