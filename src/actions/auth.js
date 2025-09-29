@@ -48,5 +48,5 @@ export async function login(prevState, formData) {
 
 export async function logout() {
   cookies().delete('auth-token')
-  redirect('/dashboard/login')
+  redirect('/login')
 }

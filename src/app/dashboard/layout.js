@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { logout } from '../../actions/auth'
 
 export default function DashboardLayout({ children }) {
   return (
@@ -54,7 +55,7 @@ export default function DashboardLayout({ children }) {
           <header className="bg-white shadow-sm px-6 py-4">
             <div className="flex justify-between items-center">
               <h1 className="text-2xl font-bold text-gray-900">Portfolio CMS</h1>
-              <form action="/api/logout" method="post">
+              <form action={logout}>
                 <button
                   type="submit"
                   className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium shadow-sm hover:shadow-md transition-all duration-300 transform hover:scale-105 flex items-center space-x-2 disabled:cursor-not-allowed cursor-pointer"
