@@ -1,27 +1,38 @@
 import Image from 'next/image';
+import { PrismaClient } from '@prisma/client'
 
-export default function About() {
+const prisma = new PrismaClient()
+
+async function getAbout() {
+  return await prisma.about.findFirst() || { content: 'About content not available.' }
+}
+
+export default async function About() {
+  const about = await getAbout()
   return (
-    <main className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 dark:from-black dark:to-black">
-      <div className="container mx-auto px-4 py-16">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+    <main className="min-h-screen bg-gradient-to-br from-accent/5 to-primary/5 dark:from-surface-dark dark:to-surface-dark">
+      <div className="container-fluid py-16">
+        <div className="max-w-5xl mx-auto">
+          <h1 className="text-heading-1 font-bold text-text-primary dark:text-foreground mb-12 text-center animate-fade-in">
             About Me
           </h1>
-          <div className="bg-white dark:bg-black rounded-lg shadow-lg p-8">
-            <div className="text-center mb-8">
-              <Image
-                src="/images/nasim.jpg"
-                alt="Nasim Ahame"
-                width={192}
-                height={192}
-                className="rounded-full shadow-lg mx-auto mb-4"
-                priority
-              />
-              <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">
+          <div className="bg-surface dark:bg-surface-dark rounded-xl shadow-xl p-8 md:p-12 animate-scale-in">
+            <div className="text-center mb-12">
+              <div className="relative inline-block mb-6">
+                <div className="absolute -inset-2 bg-gradient-to-r from-primary to-accent rounded-full blur-lg opacity-30"></div>
+                <Image
+                  src="/images/nasim.jpg"
+                  alt="Nasim Ahame"
+                  width={192}
+                  height={192}
+                  className="rounded-full shadow-xl relative z-10"
+                  priority
+                />
+              </div>
+              <h2 className="text-heading-2 font-semibold text-text-primary dark:text-foreground mb-2">
                 NASIM AHAMED
               </h2>
-              <p className="text-gray-600 dark:text-gray-300">
+              <p className="text-body text-text-secondary dark:text-text-secondary">
                 Programmer | Tech Enthusiast | Client
               </p>
             </div>
@@ -29,66 +40,60 @@ export default function About() {
             <div className="space-y-8">
               <div>
                 <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">About Me</h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-4">
-                  I am a Back-end Developer skilled in PHP, JavaScript, Python, MySQL, and PostgreSQL. I have experience with frameworks like Laravel, CodeIgniter, Django and Next.js. I am good at designing and improving databases, working in Linux, and have knowledge of frontend, CI/CD, and deployment. I enjoy building software that is fast, reliable, and useful for users.
-                </p>
-                <p className="text-gray-600 dark:text-gray-300 mb-4">
-                  My journey in software development began during my university years, and I've since worked with various companies, delivering solutions that impact real users. I believe in writing clean, maintainable code and staying updated with the latest technologies and best practices.
-                </p>
-                <p className="text-gray-600 dark:text-gray-300">
-                  When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, or sharing knowledge with the developer community. I'm passionate about creating digital solutions that make a difference.
-                </p>
+                <div className="text-gray-600 dark:text-gray-300 whitespace-pre-line">
+                  {about.content}
+                </div>
               </div>
 
-              <div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Skills</h3>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-2">Programming</h4>
+              <div className="animate-slide-in-left">
+                <h3 className="text-heading-3 font-semibold text-text-primary dark:text-foreground mb-6">Skills</h3>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    <h4 className="font-medium text-text-primary dark:text-foreground mb-3">Programming</h4>
                     <div className="flex flex-wrap gap-2">
-                      <span className="bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 px-3 py-1 rounded-full text-sm">PHP</span>
-                      <span className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-3 py-1 rounded-full text-sm">JavaScript</span>
-                      <span className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-sm">Python</span>
+                      <span className="bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary px-3 py-1 rounded-full text-body-small font-medium">PHP</span>
+                      <span className="bg-accent/10 dark:bg-accent/20 text-accent dark:text-accent px-3 py-1 rounded-full text-body-small font-medium">JavaScript</span>
+                      <span className="bg-secondary/10 dark:bg-secondary/20 text-secondary dark:text-secondary px-3 py-1 rounded-full text-body-small font-medium">Python</span>
                     </div>
                   </div>
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-2">Web Technologies</h4>
+                  <div className="space-y-4">
+                    <h4 className="font-medium text-text-primary dark:text-foreground mb-3">Web Technologies</h4>
                     <div className="flex flex-wrap gap-2">
-                      <span className="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-3 py-1 rounded-full text-sm">HTML</span>
-                      <span className="bg-pink-100 dark:bg-pink-900 text-pink-800 dark:text-pink-200 px-3 py-1 rounded-full text-sm">CSS</span>
-                      <span className="bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 px-3 py-1 rounded-full text-sm">Bootstrap</span>
+                      <span className="bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary px-3 py-1 rounded-full text-body-small font-medium">HTML</span>
+                      <span className="bg-accent/10 dark:bg-accent/20 text-accent dark:text-accent px-3 py-1 rounded-full text-body-small font-medium">CSS</span>
+                      <span className="bg-secondary/10 dark:bg-secondary/20 text-secondary dark:text-secondary px-3 py-1 rounded-full text-body-small font-medium">Bootstrap</span>
                     </div>
                   </div>
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-2">Frameworks & Libraries</h4>
+                  <div className="space-y-4">
+                    <h4 className="font-medium text-text-primary dark:text-foreground mb-3">Frameworks & Libraries</h4>
                     <div className="flex flex-wrap gap-2">
-                      <span className="bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 px-3 py-1 rounded-full text-sm">CodeIgniter</span>
-                      <span className="bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200 px-3 py-1 rounded-full text-sm">Laravel</span>
-                      <span className="bg-teal-100 dark:bg-teal-900 text-teal-800 dark:text-teal-200 px-3 py-1 rounded-full text-sm">Django</span>
-                      <span className="bg-cyan-100 dark:bg-cyan-900 text-cyan-800 dark:text-cyan-200 px-3 py-1 rounded-full text-sm">Express</span>
-                      <span className="bg-lime-100 dark:bg-lime-900 text-lime-800 dark:text-lime-200 px-3 py-1 rounded-full text-sm">React</span>
-                      <span className="bg-emerald-100 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-200 px-3 py-1 rounded-full text-sm">Next.js</span>
+                      <span className="bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200 px-3 py-1 rounded-full text-body-small font-medium">CodeIgniter</span>
+                      <span className="bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-200 px-3 py-1 rounded-full text-body-small font-medium">Laravel</span>
+                      <span className="bg-teal-100 dark:bg-teal-900/30 text-teal-800 dark:text-teal-200 px-3 py-1 rounded-full text-body-small font-medium">Django</span>
+                      <span className="bg-cyan-100 dark:bg-cyan-900/30 text-cyan-800 dark:text-cyan-200 px-3 py-1 rounded-full text-body-small font-medium">Express</span>
+                      <span className="bg-lime-100 dark:bg-lime-900/30 text-lime-800 dark:text-lime-200 px-3 py-1 rounded-full text-body-small font-medium">React</span>
+                      <span className="bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-200 px-3 py-1 rounded-full text-body-small font-medium">Next.js</span>
                     </div>
                   </div>
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-2">Databases</h4>
+                  <div className="space-y-4">
+                    <h4 className="font-medium text-text-primary dark:text-foreground mb-3">Databases</h4>
                     <div className="flex flex-wrap gap-2">
-                      <span className="bg-violet-100 dark:bg-violet-900 text-violet-800 dark:text-violet-200 px-3 py-1 rounded-full text-sm">MySQL</span>
-                      <span className="bg-rose-100 dark:bg-rose-900 text-rose-800 dark:text-rose-200 px-3 py-1 rounded-full text-sm">PostgreSQL</span>
-                      <span className="bg-amber-100 dark:bg-amber-900 text-amber-800 dark:text-amber-200 px-3 py-1 rounded-full text-sm">MongoDB</span>
+                      <span className="bg-violet-100 dark:bg-violet-900/30 text-violet-800 dark:text-violet-200 px-3 py-1 rounded-full text-body-small font-medium">MySQL</span>
+                      <span className="bg-rose-100 dark:bg-rose-900/30 text-rose-800 dark:text-rose-200 px-3 py-1 rounded-full text-body-small font-medium">PostgreSQL</span>
+                      <span className="bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-200 px-3 py-1 rounded-full text-body-small font-medium">MongoDB</span>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Experience</h3>
-                <div className="space-y-4">
-                  <div className="border-l-4 border-indigo-500 pl-4">
-                    <h4 className="font-semibold text-gray-900 dark:text-white">SOFTWARE ENGINEER</h4>
-                    <p className="text-indigo-600 dark:text-indigo-400">Biz Bangla Media Limited, Kawran Bazar</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">03/2021 - 04/2024</p>
-                    <ul className="mt-2 text-gray-600 dark:text-gray-300 text-sm">
+              <div className="animate-slide-in-right">
+                <h3 className="text-heading-3 font-semibold text-text-primary dark:text-foreground mb-6">Experience</h3>
+                <div className="space-y-6">
+                  <div className="border-l-4 border-primary pl-6">
+                    <h4 className="font-semibold text-text-primary dark:text-foreground">SOFTWARE ENGINEER</h4>
+                    <p className="text-primary dark:text-primary">Biz Bangla Media Limited, Kawran Bazar</p>
+                    <p className="text-body-small text-text-secondary dark:text-text-secondary">03/2021 - 04/2024</p>
+                    <ul className="mt-3 text-text-secondary dark:text-text-secondary text-body-small space-y-1">
                       <li>• Update and maintain websites for security and performance</li>
                       <li>• Debug and resolve issues</li>
                       <li>• Manage Apache servers and optimize performance</li>
@@ -96,22 +101,22 @@ export default function About() {
                       <li>• Collaborate across teams</li>
                     </ul>
                   </div>
-                  <div className="border-l-4 border-green-500 pl-4">
-                    <h4 className="font-semibold text-gray-900 dark:text-white">SOFTWARE ENGINEER</h4>
-                    <p className="text-green-600 dark:text-green-400">ICE Technologies Limited, Uttara</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">05/2019 - 12/2020</p>
-                    <ul className="mt-2 text-gray-600 dark:text-gray-300 text-sm">
+                  <div className="border-l-4 border-accent pl-6">
+                    <h4 className="font-semibold text-text-primary dark:text-foreground">SOFTWARE ENGINEER</h4>
+                    <p className="text-accent dark:text-accent">ICE Technologies Limited, Uttara</p>
+                    <p className="text-body-small text-text-secondary dark:text-text-secondary">05/2019 - 12/2020</p>
+                    <ul className="mt-3 text-text-secondary dark:text-text-secondary text-body-small space-y-1">
                       <li>• Write reusable, standard code with documentation</li>
                       <li>• Participate in a full development lifecycle</li>
                       <li>• Maintain project documentation</li>
                       <li>• Deliver products with integrity</li>
                     </ul>
                   </div>
-                  <div className="border-l-4 border-blue-500 pl-4">
-                    <h4 className="font-semibold text-gray-900 dark:text-white">PROGRAMMER</h4>
-                    <p className="text-blue-600 dark:text-blue-400">Digicon Technologies Limited, Mirpur</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">12/2017 - 05/2019</p>
-                    <ul className="mt-2 text-gray-600 dark:text-gray-300 text-sm">
+                  <div className="border-l-4 border-secondary pl-6">
+                    <h4 className="font-semibold text-text-primary dark:text-foreground">PROGRAMMER</h4>
+                    <p className="text-secondary dark:text-secondary">Digicon Technologies Limited, Mirpur</p>
+                    <p className="text-body-small text-text-secondary dark:text-text-secondary">12/2017 - 05/2019</p>
+                    <ul className="mt-3 text-text-secondary dark:text-text-secondary text-body-small space-y-1">
                       <li>• Develop reusable, documented code</li>
                       <li>• Ensure QMS-compliant documentation</li>
                       <li>• Analyze, design, and develop per SDLC</li>
@@ -130,42 +135,42 @@ export default function About() {
                 </div>
               </div>
 
-              <div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">My Values</h3>
+              <div className="animate-fade-in">
+                <h3 className="text-heading-3 font-semibold text-text-primary dark:text-foreground mb-6">My Values</h3>
                 <div className="grid md:grid-cols-2 gap-6">
-                  <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                    <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Quality & Excellence</h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">I strive for excellence in every project, ensuring code quality, performance, and user satisfaction.</p>
+                  <div className="p-6 bg-surface dark:bg-surface-dark rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <h4 className="font-semibold text-text-primary dark:text-foreground mb-3">Quality & Excellence</h4>
+                    <p className="text-body text-text-secondary dark:text-text-secondary">I strive for excellence in every project, ensuring code quality, performance, and user satisfaction.</p>
                   </div>
-                  <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                    <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Continuous Learning</h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">Technology evolves rapidly, and I commit to staying updated with the latest tools and best practices.</p>
+                  <div className="p-6 bg-surface dark:bg-surface-dark rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <h4 className="font-semibold text-text-primary dark:text-foreground mb-3">Continuous Learning</h4>
+                    <p className="text-body text-text-secondary dark:text-text-secondary">Technology evolves rapidly, and I commit to staying updated with the latest tools and best practices.</p>
                   </div>
-                  <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                    <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Collaboration</h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">I believe great software is built through teamwork, clear communication, and shared vision.</p>
+                  <div className="p-6 bg-surface dark:bg-surface-dark rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <h4 className="font-semibold text-text-primary dark:text-foreground mb-3">Collaboration</h4>
+                    <p className="text-body text-text-secondary dark:text-text-secondary">I believe great software is built through teamwork, clear communication, and shared vision.</p>
                   </div>
-                  <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                    <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Problem Solving</h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">I enjoy tackling complex challenges and finding elegant solutions that create real value.</p>
+                  <div className="p-6 bg-surface dark:bg-surface-dark rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <h4 className="font-semibold text-text-primary dark:text-foreground mb-3">Problem Solving</h4>
+                    <p className="text-body text-text-secondary dark:text-text-secondary">I enjoy tackling complex challenges and finding elegant solutions that create real value.</p>
                   </div>
                 </div>
               </div>
 
-              <div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Training</h3>
-                <div className="grid md:grid-cols-3 gap-4">
-                  <div className="text-center p-4 bg-gray-50 dark:bg-black rounded-lg">
-                    <h4 className="font-semibold text-gray-900 dark:text-white">CCNA</h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">Networking, routing, switching, troubleshooting</p>
+              <div className="animate-scale-in">
+                <h3 className="text-heading-3 font-semibold text-text-primary dark:text-foreground mb-6">Training</h3>
+                <div className="grid md:grid-cols-3 gap-6">
+                  <div className="text-center p-6 bg-surface dark:bg-surface-dark rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <h4 className="font-semibold text-text-primary dark:text-foreground mb-2">CCNA</h4>
+                    <p className="text-body-small text-text-secondary dark:text-text-secondary">Networking, routing, switching, troubleshooting</p>
                   </div>
-                  <div className="text-center p-4 bg-gray-50 dark:bg-black rounded-lg">
-                     <h4 className="font-semibold text-gray-900 dark:text-white">DevOps Capsule</h4>
-                     <p className="text-sm text-gray-600 dark:text-gray-300">Linux, Docker, Kubernetes, CI/CD basics</p>
+                  <div className="text-center p-6 bg-surface dark:bg-surface-dark rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                     <h4 className="font-semibold text-text-primary dark:text-foreground mb-2">DevOps Capsule</h4>
+                     <p className="text-body-small text-text-secondary dark:text-text-secondary">Linux, Docker, Kubernetes, CI/CD basics</p>
                    </div>
-                   <div className="text-center p-4 bg-gray-50 dark:bg-black rounded-lg">
-                    <h4 className="font-semibold text-gray-900 dark:text-white">MERN Stack</h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">MongoDB, Express, React, Node.js</p>
+                   <div className="text-center p-6 bg-surface dark:bg-surface-dark rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <h4 className="font-semibold text-text-primary dark:text-foreground mb-2">MERN Stack</h4>
+                    <p className="text-body-small text-text-secondary dark:text-text-secondary">MongoDB, Express, React, Node.js</p>
                   </div>
                 </div>
               </div>

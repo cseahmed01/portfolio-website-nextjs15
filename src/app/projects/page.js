@@ -1,81 +1,59 @@
-export default function Projects() {
-  const projects = [
-    {
-      title: "Client Complaint Management System",
-      description: "A comprehensive system for managing client complaints with user-friendly interface and efficient tracking capabilities.",
-      technologies: ["PHP", "jQuery", "Bootstrap"],
-      link: "#"
-    },
-    {
-      title: "Vehicle Management System (CTM)",
-      description: "Complete vehicle tracking and management solution for fleet operations and maintenance scheduling.",
-      technologies: ["CodeIgniter3", "Bootstrap3"],
-      link: "#"
-    },
-    {
-      title: "Meeting Room Management System",
-      description: "Efficient booking and management system for meeting rooms with scheduling and resource allocation features.",
-      technologies: ["PHP", "jQuery", "Bootstrap3"],
-      link: "#"
-    },
-    {
-      title: "Online News Portal",
-      description: "Dynamic news portal with content management, user engagement features, and responsive design.",
-      technologies: ["CodeIgniter3", "JavaScript", "Bootstrap3"],
-      link: "#"
-    },
-    {
-      title: "University Management System (UMS)",
-      description: "Comprehensive university management solution handling student records, courses, and administrative tasks.",
-      technologies: ["Laravel 11", "Bootstrap 5"],
-      link: "#"
-    },
-    {
-      title: "Payroll Management System",
-      description: "Complete payroll processing system with employee management, salary calculations, and reporting features.",
-      technologies: ["Laravel 11"],
-      link: "#"
-    },
-    {
-      title: "Online News Portal CMS & Portal",
-      description: "Full-featured content management system and news portal with modern frontend and robust backend architecture.",
-      technologies: ["Laravel 11", "Next.js 15"],
-      link: "#"
-    }
-  ];
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
+
+async function getProjects() {
+  const projects = await prisma.project.findMany({
+    orderBy: { createdAt: 'desc' }
+  })
+  return projects.map(project => ({
+    ...project,
+    technologies: project.technologies ? JSON.parse(project.technologies) : []
+  }))
+}
+
+export default async function Projects() {
+  const projects = await getProjects()
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-100 dark:from-black dark:to-black">
-      <div className="container mx-auto px-4 py-16">
-        <div className="max-w-6xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+    <main className="min-h-screen bg-gradient-to-br from-secondary/5 to-primary/5 dark:from-surface-dark dark:to-surface-dark">
+      <div className="container-fluid py-16">
+        <div className="max-w-7xl mx-auto">
+          <h1 className="text-heading-1 font-bold text-text-primary dark:text-foreground mb-8 text-center animate-fade-in">
             My Projects
           </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-12 text-center">
+          <p className="text-body-large text-text-secondary dark:text-text-secondary max-w-3xl mx-auto mb-16 text-center animate-fade-in">
             Explore a collection of my recent work showcasing my expertise in full-stack development,
             from web applications to management systems. Each project demonstrates my commitment to
             clean code, user experience, and scalable solutions.
           </p>
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project, index) => (
-              <div key={index} className="bg-white dark:bg-black rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+              <div
+                key={index}
+                className="bg-surface dark:bg-surface-dark rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 animate-scale-in group"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
                 <div className="p-6">
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
+                  <h3 className="text-heading-3 font-semibold text-text-primary dark:text-foreground mb-3 group-hover:text-primary transition-colors">
                     {project.title}
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-300 mb-4">
+                  <p className="text-body text-text-secondary dark:text-text-secondary mb-4">
                     {project.description}
                   </p>
                   <div className="flex flex-wrap gap-2 mb-4">
                     {project.technologies.map((tech, techIndex) => (
-                      <span key={techIndex} className="bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 px-2 py-1 rounded text-sm">
+                      <span
+                        key={techIndex}
+                        className="bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary px-3 py-1 rounded-full text-body-small font-medium"
+                      >
                         {tech}
                       </span>
                     ))}
                   </div>
                   <a
                     href={project.link}
-                    className="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded transition-colors"
+                    className="inline-block bg-primary hover:bg-primary-dark text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300 hover:shadow-lg focus-ring"
                   >
                     View Project
                   </a>
