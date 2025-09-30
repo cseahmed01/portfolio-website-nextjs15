@@ -75,7 +75,7 @@ export const metadata = {
   twitter: {
     card: 'summary_large_image',
     title: "Nasim Ahamed - Full Stack Developer | PHP Laravel React Expert",
-    description: "Professional full-stack developer with 3+ years experience. Specializing in PHP, Laravel, React, Next.js. View portfolio and hire me.",
+    description: "Professional full-stack developer with 5+ years experience. Specializing in PHP, Laravel, React, Next.js. View portfolio and hire me.",
     images: ['/images/nasim.jpg'],
     creator: '@nasimahamed',
     site: '@nasimahamed',
@@ -118,7 +118,7 @@ export default function RootLayout({ children }) {
     "@type": "Person",
     "name": "Nasim Ahamed",
     "jobTitle": "Full Stack Developer",
-    "description": "Professional full-stack developer specializing in PHP, Laravel, React, Next.js, and modern web technologies with 3+ years of experience.",
+    "description": "Professional full-stack developer specializing in PHP, Laravel, React, Next.js, and modern web technologies with 5+ years of experience.",
     "url": "https://nasimahamed.dev",
     "image": "https://nasimahamed.dev/images/nasim.jpg",
     "sameAs": [
