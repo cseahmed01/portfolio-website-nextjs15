@@ -34,8 +34,8 @@ export default async function Home() {
   ];
 
   const stats = [
-    { number: '50+', label: 'Projects Completed', icon: '🚀' },
-    { number: '3+', label: 'Years Experience', icon: '⏰' },
+    { number: '15+', label: 'Projects Completed', icon: '🚀' },
+    { number: '5+', label: 'Years Experience', icon: '⏰' },
     { number: '15+', label: 'Technologies', icon: '🛠️' },
     { number: '100%', label: 'Client Satisfaction', icon: '⭐' }
   ];

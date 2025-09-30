@@ -67,13 +67,6 @@ export const metadata = {
         alt: 'Nasim Ahamed - Full Stack Developer Portfolio',
         type: 'image/jpeg',
       },
-      {
-        url: '/images/portfolio-og.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Nasim Ahamed Portfolio Projects',
-        type: 'image/jpeg',
-      },
     ],
     locale: 'en_US',
     type: 'website',
