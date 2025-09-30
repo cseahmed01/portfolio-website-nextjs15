@@ -20,6 +20,10 @@ export async function GET() {
       email: contact.email,
       phone: contact.phone || '+1 (555) 123-4567',
       address: contact.address || 'Your Location'
+    }, {
+      headers: {
+        'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400'
+      }
     })
   } catch (error) {
     console.error('Error fetching contact info:', error)

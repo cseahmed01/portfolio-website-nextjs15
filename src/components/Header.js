@@ -17,7 +17,7 @@ export default function Header() {
   ];
 
   return (
-    <header className="bg-surface dark:bg-surface-dark shadow-sm border-b border-border sticky top-0 z-50 backdrop-blur-sm bg-opacity-95">
+    <header className={`bg-surface dark:bg-surface-dark shadow-sm border-b border-border sticky top-0 z-50 ${isMenuOpen ? '' : 'backdrop-blur-sm bg-opacity-95'}`}>
       <nav className="container-fluid py-2 flex items-center justify-between">
         <Link href="/" className="flex items-center group relative z-60">
           <Logo />

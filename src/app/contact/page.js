@@ -18,7 +18,9 @@ export default function Contact() {
 
   const fetchContactData = async () => {
     try {
-      const response = await fetch('/api/contact-info')
+      const response = await fetch('/api/contact-info', {
+        next: { revalidate: 3600 } // Revalidate every hour
+      })
       const data = await response.json()
       setContact(data)
     } catch (error) {
