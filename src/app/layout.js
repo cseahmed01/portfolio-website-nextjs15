@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: "Nasim Ahamed - Full Stack Developer | PHP Laravel React Next.js Expert",
-  description: "Professional full-stack developer specializing in PHP, Laravel, React, Next.js, and modern web technologies. 3+ years experience building scalable web applications. View portfolio projects and hire me for your next development project.",
+  description: "Professional full-stack developer specializing in PHP, Laravel, React, Next.js, and modern web technologies. 5+ years experience building scalable web applications. View portfolio projects and hire me for your next development project.",
   keywords: [
     "Nasim Ahamed",
     "full stack developer",
