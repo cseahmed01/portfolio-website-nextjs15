@@ -16,7 +16,7 @@ async function getProjects() {
         id: 1,
         title: 'Client Complaint Management System',
         description: 'A comprehensive system for managing client complaints with user-friendly interface, complaint tracking, and resolution management.',
-        image: '/images/project1.jpg',
+        image: null,
         link: '/projects',
         technologies: [{ name: 'PHP' }, { name: 'jQuery' }, { name: 'Bootstrap' }]
       },
@@ -24,7 +24,7 @@ async function getProjects() {
         id: 2,
         title: 'Vehicle Management System (CTM)',
         description: 'Complete vehicle tracking and management system for fleet operations, maintenance scheduling, and vehicle utilization analytics.',
-        image: '/images/project2.jpg',
+        image: null,
         link: '/projects',
         technologies: [{ name: 'CodeIgniter3' }, { name: 'Bootstrap3' }]
       },
@@ -32,7 +32,7 @@ async function getProjects() {
         id: 3,
         title: 'Meeting Room Management System',
         description: 'Efficient meeting room booking and management system with calendar integration, availability checking, and automated notifications.',
-        image: '/images/project3.jpg',
+        image: null,
         link: '/projects',
         technologies: [{ name: 'PHP' }, { name: 'jQuery' }, { name: 'Bootstrap3' }]
       },
@@ -40,7 +40,7 @@ async function getProjects() {
         id: 4,
         title: 'Online News Portal',
         description: 'Dynamic news portal with content management, user engagement features, and responsive design for optimal user experience.',
-        image: '/images/project4.jpg',
+        image: null,
         link: '/projects',
         technologies: [{ name: 'CodeIgniter3' }, { name: 'JavaScript' }, { name: 'Bootstrap3' }]
       },
@@ -48,7 +48,7 @@ async function getProjects() {
         id: 5,
         title: 'University Management System (UMS)',
         description: 'Comprehensive university management solution handling student records, courses, and administrative tasks with modern UI.',
-        image: '/images/project5.jpg',
+        image: null,
         link: '/projects',
         technologies: [{ name: 'Laravel 11' }, { name: 'Bootstrap 5' }]
       },
@@ -56,7 +56,7 @@ async function getProjects() {
         id: 6,
         title: 'Payroll Management System',
         description: 'Complete payroll processing system with employee management, salary calculations, tax computations, and reporting features.',
-        image: '/images/project6.jpg',
+        image: null,
         link: '/projects',
         technologies: [{ name: 'Laravel11' }]
       },
@@ -64,7 +64,7 @@ async function getProjects() {
         id: 7,
         title: 'Online News Portal CMS & Portal',
         description: 'Full-featured content management system and news portal with modern frontend architecture and robust backend implementation.',
-        image: '/images/project7.jpg',
+        image: null,
         link: '/projects',
         technologies: [{ name: 'Laravel 11' }, { name: 'NextJs15' }]
       }

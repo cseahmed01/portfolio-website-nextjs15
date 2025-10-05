@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { prisma } from '../../lib/prisma';
+import { prisma } from '../lib/prisma';
 import TypingAnimation from './TypingAnimation';
 
 async function getUser() {
@@ -59,7 +59,7 @@ async function getFeaturedProjects() {
         id: 1,
         title: 'Client Complaint Management System',
         description: 'A comprehensive system for managing client complaints with user-friendly interface, complaint tracking, and resolution management.',
-        image: '/images/project1.jpg',
+        image: null,
         link: '/projects',
         technologies: [{ name: 'PHP' }, { name: 'jQuery' }, { name: 'Bootstrap' }]
       },
@@ -67,7 +67,7 @@ async function getFeaturedProjects() {
         id: 2,
         title: 'Vehicle Management System (CTM)',
         description: 'Complete vehicle tracking and management system for fleet operations, maintenance scheduling, and vehicle utilization analytics.',
-        image: '/images/project2.jpg',
+        image: null,
         link: '/projects',
         technologies: [{ name: 'CodeIgniter3' }, { name: 'Bootstrap3' }]
       },
@@ -75,7 +75,7 @@ async function getFeaturedProjects() {
         id: 3,
         title: 'Meeting Room Management System',
         description: 'Efficient meeting room booking and management system with calendar integration, availability checking, and automated notifications.',
-        image: '/images/project3.jpg',
+        image: null,
         link: '/projects',
         technologies: [{ name: 'PHP' }, { name: 'jQuery' }, { name: 'Bootstrap3' }]
       }
