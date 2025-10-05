@@ -72,6 +72,8 @@ async function getProjects() {
   }
 }
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: "Projects Portfolio | Nasim Ahamed - Full Stack Developer",
   description: "Explore my portfolio of web development projects including PHP Laravel applications, React Next.js websites, and full-stack solutions. View detailed case studies and technologies used.",
