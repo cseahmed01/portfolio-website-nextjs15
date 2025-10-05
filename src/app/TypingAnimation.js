@@ -2,6 +2,14 @@
 import { useState, useEffect } from 'react';
 
 export default function TypingAnimation({ skills }) {
+  if (!skills || skills.length === 0) {
+    return (
+      <div className="text-heading-2 font-semibold text-primary dark:text-primary">
+        Full Stack Developer
+      </div>
+    );
+  }
+
   const [currentSkill, setCurrentSkill] = useState('');
   const [skillIndex, setSkillIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(true);
