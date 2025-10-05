@@ -1,15 +1,77 @@
 import { PrismaClient } from '@prisma/client'
 import Link from 'next/link'
+import Image from 'next/image'
 
 const prisma = new PrismaClient()
 
 async function getProjects() {
-  return await prisma.project.findMany({
-    include: {
-      technologies: true
-    },
-    orderBy: { createdAt: 'desc' }
-  })
+  try {
+    return await prisma.project.findMany({
+      include: {
+        technologies: true
+      },
+      orderBy: { createdAt: 'desc' }
+    })
+  } catch {
+    return [
+      {
+        id: 1,
+        title: 'Client Complaint Management System',
+        description: 'A comprehensive system for managing client complaints with user-friendly interface, complaint tracking, and resolution management.',
+        image: '/images/project1.jpg',
+        link: '/projects',
+        technologies: [{ name: 'PHP' }, { name: 'jQuery' }, { name: 'Bootstrap' }]
+      },
+      {
+        id: 2,
+        title: 'Vehicle Management System (CTM)',
+        description: 'Complete vehicle tracking and management system for fleet operations, maintenance scheduling, and vehicle utilization analytics.',
+        image: '/images/project2.jpg',
+        link: '/projects',
+        technologies: [{ name: 'CodeIgniter3' }, { name: 'Bootstrap3' }]
+      },
+      {
+        id: 3,
+        title: 'Meeting Room Management System',
+        description: 'Efficient meeting room booking and management system with calendar integration, availability checking, and automated notifications.',
+        image: '/images/project3.jpg',
+        link: '/projects',
+        technologies: [{ name: 'PHP' }, { name: 'jQuery' }, { name: 'Bootstrap3' }]
+      },
+      {
+        id: 4,
+        title: 'Online News Portal',
+        description: 'Dynamic news portal with content management, user engagement features, and responsive design for optimal user experience.',
+        image: '/images/project4.jpg',
+        link: '/projects',
+        technologies: [{ name: 'CodeIgniter3' }, { name: 'JavaScript' }, { name: 'Bootstrap3' }]
+      },
+      {
+        id: 5,
+        title: 'University Management System (UMS)',
+        description: 'Comprehensive university management solution handling student records, courses, and administrative tasks with modern UI.',
+        image: '/images/project5.jpg',
+        link: '/projects',
+        technologies: [{ name: 'Laravel 11' }, { name: 'Bootstrap 5' }]
+      },
+      {
+        id: 6,
+        title: 'Payroll Management System',
+        description: 'Complete payroll processing system with employee management, salary calculations, tax computations, and reporting features.',
+        image: '/images/project6.jpg',
+        link: '/projects',
+        technologies: [{ name: 'Laravel11' }]
+      },
+      {
+        id: 7,
+        title: 'Online News Portal CMS & Portal',
+        description: 'Full-featured content management system and news portal with modern frontend architecture and robust backend implementation.',
+        image: '/images/project7.jpg',
+        link: '/projects',
+        technologies: [{ name: 'Laravel 11' }, { name: 'NextJs15' }]
+      }
+    ]
+  }
 }
 
 export const metadata = {
@@ -72,6 +134,15 @@ export default async function Projects() {
                 className="bg-surface dark:bg-surface-dark rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 animate-scale-in group"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
+                {project.image && (
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    width={400}
+                    height={250}
+                    className="w-full h-48 object-cover"
+                  />
+                )}
                 <div className="p-6">
                   <h3 className="text-heading-3 font-semibold text-text-primary dark:text-foreground mb-3 group-hover:text-primary transition-colors">
                     {project.title}

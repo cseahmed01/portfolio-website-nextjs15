@@ -5,26 +5,110 @@ import TypingAnimation from './TypingAnimation';
 
 const prisma = new PrismaClient();
 
+async function getUser() {
+  try {
+    return await prisma.user.findFirst() || { name: 'Nasim Ahamed' };
+  } catch {
+    return { name: 'Nasim Ahamed' };
+  }
+}
+
+async function getAbout() {
+  try {
+    return await prisma.about.findFirst() || { content: 'I am a passionate software engineer with expertise in web development, specializing in modern technologies like React, Next.js, and Node.js.' };
+  } catch {
+    return { content: 'I am a passionate software engineer with expertise in web development, specializing in modern technologies like React, Next.js, and Node.js.' };
+  }
+}
+
 async function getSkills() {
-  return await prisma.skill.findMany({
-    orderBy: { createdAt: 'desc' }
-  });
+  try {
+    return await prisma.skill.findMany({
+      orderBy: { createdAt: 'desc' }
+    });
+  } catch {
+    return [
+      { name: 'PHP' },
+      { name: 'JavaScript' },
+      { name: 'Python' },
+      { name: 'HTML' },
+      { name: 'CSS' },
+      { name: 'Bootstrap' },
+      { name: 'Laravel' },
+      { name: 'CodeIgniter' },
+      { name: 'Django' },
+      { name: 'React' },
+      { name: 'Next.js' },
+      { name: 'MySQL' },
+      { name: 'PostgreSQL' },
+      { name: 'MongoDB' }
+    ];
+  }
 }
 
 async function getFeaturedProjects() {
-  return await prisma.project.findMany({
-    include: {
-      technologies: true
-    },
-    orderBy: { createdAt: 'desc' },
-    take: 3
-  });
+  try {
+    return await prisma.project.findMany({
+      include: {
+        technologies: true
+      },
+      orderBy: { createdAt: 'desc' },
+      take: 3
+    });
+  } catch {
+    return [
+      {
+        id: 1,
+        title: 'Client Complaint Management System',
+        description: 'A comprehensive system for managing client complaints with user-friendly interface, complaint tracking, and resolution management.',
+        image: '/images/project1.jpg',
+        link: '/projects',
+        technologies: [{ name: 'PHP' }, { name: 'jQuery' }, { name: 'Bootstrap' }]
+      },
+      {
+        id: 2,
+        title: 'Vehicle Management System (CTM)',
+        description: 'Complete vehicle tracking and management system for fleet operations, maintenance scheduling, and vehicle utilization analytics.',
+        image: '/images/project2.jpg',
+        link: '/projects',
+        technologies: [{ name: 'CodeIgniter3' }, { name: 'Bootstrap3' }]
+      },
+      {
+        id: 3,
+        title: 'Meeting Room Management System',
+        description: 'Efficient meeting room booking and management system with calendar integration, availability checking, and automated notifications.',
+        image: '/images/project3.jpg',
+        link: '/projects',
+        technologies: [{ name: 'PHP' }, { name: 'jQuery' }, { name: 'Bootstrap3' }]
+      }
+    ];
+  }
+}
+
+async function getProjectCount() {
+  try {
+    return await prisma.project.count();
+  } catch {
+    return 7;
+  }
+}
+
+async function getSkillCount() {
+  try {
+    return await prisma.skill.count();
+  } catch {
+    return 14;
+  }
 }
 
 export default async function Home() {
+  const user = await getUser();
+  const about = await getAbout();
   const skills = await getSkills();
   const skillNames = skills.map(skill => skill.name);
   const featuredProjects = await getFeaturedProjects();
+  const projectCount = await getProjectCount();
+  const skillCount = await getSkillCount();
 
   const socialLinks = [
     { name: 'GitHub', url: 'https://github.com', icon: '🐙' },
@@ -34,9 +118,9 @@ export default async function Home() {
   ];
 
   const stats = [
-    { number: '15+', label: 'Projects Completed', icon: '🚀' },
+    { number: `${projectCount}+`, label: 'Projects Completed', icon: '🚀' },
     { number: '5+', label: 'Years Experience', icon: '⏰' },
-    { number: '15+', label: 'Technologies', icon: '🛠️' },
+    { number: `${skillCount}+`, label: 'Technologies', icon: '🛠️' },
     { number: '100%', label: 'Client Satisfaction', icon: '⭐' }
   ];
 
@@ -80,7 +164,7 @@ export default async function Home() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-center lg:text-left animate-slide-in-left">
               <h1 className="text-display font-bold text-text-primary dark:text-foreground mb-6">
-                Hi, I'm <span className="text-primary dark:text-primary">Nasim</span>
+                Hi, I'm <span className="text-primary dark:text-primary">{user?.name || 'Nasim'}</span>
               </h1>
               <div className="mb-6">
                 <p className="text-body-large text-text-secondary dark:text-text-secondary mb-2">
@@ -148,7 +232,7 @@ export default async function Home() {
                   <div className="relative bg-gradient-to-br from-surface/80 to-surface-dark/80 dark:from-surface-dark/80 dark:to-surface/80 backdrop-blur-sm p-2 rounded-3xl shadow-2xl animate-gentle-rotate">
                     <Image
                       src="/images/nasim.jpg"
-                      alt="Nasim Ahame"
+                      alt={user?.name || 'Nasim'}
                       width={400}
                       height={500}
                       className="rounded-2xl shadow-xl transform group-hover:scale-105 transition-all duration-500"
@@ -179,15 +263,15 @@ export default async function Home() {
 
                 {/* Skill Tags Floating Around */}
                 <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-surface dark:bg-surface-dark px-3 py-1 rounded-full shadow-lg animate-float" style={{ animationDelay: '0.5s' }}>
-                  <span className="text-xs font-medium text-primary">PHP</span>
+                  <span className="text-xs font-medium text-primary">{skillNames[0] || 'PHP'}</span>
                 </div>
 
                 <div className="absolute top-1/4 -left-16 bg-surface dark:bg-surface-dark px-3 py-1 rounded-full shadow-lg animate-float" style={{ animationDelay: '1.5s' }}>
-                  <span className="text-xs font-medium text-accent">React</span>
+                  <span className="text-xs font-medium text-accent">{skillNames[1] || 'React'}</span>
                 </div>
 
                 <div className="absolute bottom-1/4 -right-16 bg-surface dark:bg-surface-dark px-3 py-1 rounded-full shadow-lg animate-float" style={{ animationDelay: '2.5s' }}>
-                  <span className="text-xs font-medium text-secondary">Laravel</span>
+                  <span className="text-xs font-medium text-secondary">{skillNames[2] || 'Laravel'}</span>
                 </div>
               </div>
             </div>
@@ -236,6 +320,20 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* About Section */}
+      <section className="py-20 bg-gradient-to-br from-surface to-border/20 dark:from-surface-dark dark:to-border/10">
+        <div className="container-fluid">
+          <div className="text-center mb-16 animate-fade-in">
+            <h2 className="text-heading-1 font-bold text-text-primary dark:text-foreground mb-6">
+              About Me
+            </h2>
+            <p className="text-body-large text-text-secondary dark:text-text-secondary max-w-2xl mx-auto">
+              {about.content}
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Featured Projects Section */}
       <section className="py-20 bg-gradient-to-br from-surface to-border/20 dark:from-surface-dark dark:to-border/10">
         <div className="container-fluid">
@@ -259,6 +357,15 @@ export default async function Home() {
                   className="bg-surface dark:bg-surface-dark rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 animate-scale-in group"
                   style={{ animationDelay: `${index * 0.2}s` }}
                 >
+                  {project.image && (
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      width={400}
+                      height={250}
+                      className="w-full h-48 object-cover"
+                    />
+                  )}
                   <div className="p-6">
                     <h3 className="text-heading-3 font-semibold text-text-primary dark:text-foreground mb-3 group-hover:text-primary transition-colors">
                       {project.title}
