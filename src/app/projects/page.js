@@ -1,8 +1,6 @@
-import { PrismaClient } from '@prisma/client'
 import Link from 'next/link'
 import Image from 'next/image'
-
-const prisma = new PrismaClient()
+import { prisma } from '../../lib/prisma'
 
 async function getProjects() {
   try {

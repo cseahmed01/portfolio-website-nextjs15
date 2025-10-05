@@ -1,9 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '../../lib/prisma';
 import TypingAnimation from './TypingAnimation';
-
-const prisma = new PrismaClient();
 
 async function getUser() {
   try {
